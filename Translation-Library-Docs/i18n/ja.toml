@@ -1,0 +1,61 @@
+# Metadata 
+setting = "これは日本語の言語ファイルです"
+language_name = "日本語"
+language_code = "ja"
+
+# Common global strings
+hello = "こんにちは、{name}さん！"
+goodbye = "さようなら、{name}さん"
+yes = "はい"
+no = "いいえ"
+cancel = "キャンセル"
+confirm = "確認"
+
+# Error messages
+error_generic = "予期しないエラーが発生しました"
+error_network = "ネットワーク接続が失われました"
+error_not_found = "要求されたリソースが見つかりませんでした"
+error_permission = "この操作を行う権限がありません"
+
+[start]
+section_name = "開始セクション"
+welcome = "{name}さん、ようこそ！"
+subtitle = "ご利用いただきありがとうございます"
+cta_button = "開始する"
+
+[menu]
+section_name = "メインメニュー"
+home = "ホーム"
+settings = "設定"
+profile = "プロフィール"
+logout = "ログアウト"
+
+[settings]
+section_name = "設定"
+title = "アプリケーション設定"
+language = "言語"
+theme = "テーマ"
+theme_light = "ライト"
+theme_dark = "ダーク"
+save = "変更を保存"
+saved_success = "設定が正常に保存されました"
+
+[profile]
+section_name = "ユーザープロフィール"
+title = "あなたのプロフィール"
+username = "ユーザー名"
+email = "メールアドレス"
+edit = "プロフィールを編集"
+updated = "プロフィールが正常に更新されました"
+
+[notifications]
+section_name = "通知"
+new_message = "{count} 件の新しいメッセージがあります"
+new_messages = "{count} 件の新しいメッセージがあります"
+no_notifications = "新しい通知はありません"
+
+[time]
+section_name = "日時"
+today = "今日"
+yesterday = "昨日"
+tomorrow = "明日"
