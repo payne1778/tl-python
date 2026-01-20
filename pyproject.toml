@@ -1,0 +1,22 @@
+[project]
+name = "tl-python"
+version = "1.0.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { file = "LICENSE" }
+authors = [{ name = "payne1778" }]
+
+dependencies = ["pytest", "tomlkit", "glom", "pydantic", "typer"]
+
+[project.scripts]
+tl-python = "translation_library.__main__:main"
+
+[project.urls]
+resources-repo = "https://github.com/payne1778/Translation-Library-Docs"
+monorepo = "https://github.com/payne1778/Translation-Library"
+
+[tool.pyright]
+reportCallInDefaultInitializer = "none"
+reportMissingTypeStubs = "none"
+reportUnknownMemberType = "none"
