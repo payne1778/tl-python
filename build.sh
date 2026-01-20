@@ -3,22 +3,9 @@
 set -e 
 
 RESOURCES_DIR="resources"
-DOCS_REPO_NAME="Translation-Library-Docs"
-DOCS_REPO_URL="https://github.com/payne1778/$DOCS_REPO_NAME"
+RESOURCES_REPO_NAME="Translation-Library-Docs"
+RESOURCES_REPO_URL="https://github.com/payne1778/$RESOURCES_REPO_NAME"
 COMMIT="main"
 
-# 1. Set up virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
-
-# TODO: move dependencies installation to future pyproject.toml
-# 2. Install dependencies
-pip install pytest > /dev/null
-pip install tomlkit > /dev/null
-pip install glom > /dev/null
-pip install pydantic > /dev/null
-pip install typer > /dev/null
-
-
-# 3. Put contents of the docs repo into a new folder named with $DOCS_REPO_NAME
-git subtree add --prefix="$RESOURCES_DIR/" "$DOCS_REPO_URL" "$COMMIT" --squash
+# Put contents of the docs repo into a new folder named with $DOCS_REPO_NAME
+git subtree add --prefix="$RESOURCES_DIR/" "$RESOURCES_REPO_URL" "$COMMIT" --squash
