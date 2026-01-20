@@ -2,16 +2,22 @@
 
 set -e 
 
+# 1. Create important dirs (if they do not already exist)
+LOGS_DIR="logs"
 RESOURCES_DIR="resources"
-TEMP_DIR="temp_resources_dir"
+
+mkdir -p "$RESOURCES_DIR"
+mkdir -p "$LOGS_DIR" 
+
+# 2. Clone resources repo into a new folder named with $RESOURCES_REPO_NAME
 RESOURCES_REPO_NAME="Translation-Library-Docs"
 RESOURCES_REPO_URL="https://github.com/payne1778/$RESOURCES_REPO_NAME"
 COMMIT="main"
 
-mkdir -p "$RESOURCES_DIR"
-mkdir -p "logs" 
+git subtree add --prefix="$RESOURCES_REPO_NAME" "$RESOURCES_REPO_URL" "$COMMIT" --squash
 
-# Put contents of the docs repo into a new folder named with $DOCS_REPO_NAME
-git subtree add --prefix="$TEMP_DIR/" "$RESOURCES_REPO_URL" "$COMMIT" --squash
+# 3. Move resources repo files into the resource directory
+mv "$RESOURCES_REPO_NAME"/* "$RESOURCES_DIR"/
 
-mv "$TEMP_DIR/*" "$RESOURCES_DIR/"
+# 4. Delete the (should be) empty temp folder 
+rm -rf "$RESOURCES_REPO_NAME"
