@@ -1,4 +1,4 @@
-# Translation-Library-Python
+# Translation Library (Python)
 
 ### TL-PYTHON OPERATIONAL STATUS: _Working!_
 
