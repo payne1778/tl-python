@@ -36,7 +36,7 @@ def valid_toml_path_validator(v: str | Path) -> Path:
         logger.error("arg '%s' did not end in .toml", v)
         raise ValueError("TOML file path must end in .toml")
 
-    logger.debug("Path is TOML file: %r", v)
+    logger.debug("Path is TOML file, now checking existence: %r", v)
     return valid_path_validator(v)
 
 
