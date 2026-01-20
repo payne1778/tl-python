@@ -20,3 +20,6 @@ monorepo = "https://github.com/payne1778/Translation-Library"
 reportCallInDefaultInitializer = "none"
 reportMissingTypeStubs = "none"
 reportUnknownMemberType = "none"
+
+[tool.pytest.ini_options]
+log_cli = true
