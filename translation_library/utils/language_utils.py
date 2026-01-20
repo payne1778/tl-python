@@ -21,12 +21,17 @@ def into_toml_dict(language_code: str = Field(..., min_length=1)) -> dict[str, o
     Returns:
         dict: the language file as a TOML-like dict or {} if file was empty
     """
-    logger.debug("language_code=%r", language_code)
+    logger.debug("'language_code'=%r", language_code)
 
+    if not is_supported(language_code):
+        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
+        raise ValueError(f"{language_code} is not supported")
+
+    logger.debug("'%s' is supported. Serializing its TOML dict", language_code)
     if toml_dict := serialize_toml_dict(get_language_file_path(language_code)):
-        logger.info("Successfully retrieved toml dict from '%s.toml'", language_code)
+        logger.info("'toml_dict'=%r", toml_dict)
         return toml_dict
-    logger.warning("None dict retrieved from '%s.toml'", language_code)
+    logger.warning("None dict serialized from '%s' TOML file", language_code)
     return {}
 
 
@@ -39,17 +44,17 @@ def into_toml_str(language_code: str = Field(..., min_length=1)) -> str:
     Args:
         language_code (str): the code of the desired language to convert into a str
     """
-    logger.debug("language_code=%r", language_code)
+    logger.debug("'language_code'=%r", language_code)
 
     if not is_supported(language_code):
-        logger.error("is_supported() returned False for arg: '%s'", language_code)
+        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
         raise ValueError(f"{language_code} is not supported")
 
     logger.debug("'%s' is supported. Converting its dictionary into str", language_code)
     if toml_str := tomlkit.dumps(into_toml_dict(language_code)):
-        logger.info("Successfully converted the '%s' TOML dict into str")
+        logger.info("'toml_str'=%r", toml_str)
         return toml_str
-    logger.warning("None received from into_toml_dict() with arg '%s'", language_code)
+    logger.warning("Retrieved empty str from '%s' TOML file", language_code)
     return ""
 
 
@@ -62,5 +67,7 @@ def print_toml_dict(language_code: str = Field(..., min_length=1)) -> None:
     Args:
         language_code (str): the code of the desired language to pretty print
     """
-    logger.debug("Printing TOML file for `%s`", language_code)
-    print(into_toml_str(language_code))
+    logger.debug("'language_code'=%r", language_code)
+    toml_str: str = into_toml_str(language_code)
+    logger.debug("printing TOML str: `%s`", toml_str)
+    print(toml_str)

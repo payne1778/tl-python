@@ -22,7 +22,7 @@ def valid_path_validator(v: str | Path) -> Path:
     Returns:
         Path: the original path if it exists, otherwise errors are raised.
     """
-    logger.debug("path=%r", v)
+    logger.debug("'path'=%r", v)
     if isinstance(v, str):
         if not v.strip():
             logger.error("arg '%s' was None/null", v)
@@ -36,7 +36,7 @@ def valid_path_validator(v: str | Path) -> Path:
     if not exists(v):
         logger.error("arg '%s' could not be located/does not exist", v)
         raise FileNotFoundError(f"path '{v}' could not be located/does not exist")
-    logger.info("Validated existence of path: %r", v)
+    logger.debug("Validated existence of path: %r", v)
     return v
 
 

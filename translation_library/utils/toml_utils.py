@@ -36,7 +36,7 @@ def valid_toml_path_validator(v: str | Path) -> Path:
         logger.error("arg '%s' did not end in .toml", v)
         raise ValueError("TOML file path must end in .toml")
 
-    logger.debug("Validated extension of TOML file: %r", v)
+    logger.debug("Path is TOML file: %r", v)
     return valid_path_validator(v)
 
 
@@ -119,6 +119,7 @@ def get_value_from_key(
     Returns:
         object: the value associated with the given key path
     """
+    logger.debug("'key_path'=%r", key_path)
     try:
         language_toml_dict: dict[str, object] = serialize_toml_dict(toml_file_path)
         if value := glom(language_toml_dict, key_path):
