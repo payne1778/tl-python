@@ -1,12 +1,18 @@
 [paths]
+# You can change this parent dir of your i18n files, but do not remove this line 
 i18n_dir = "resources/i18n"
 
 [languages.en]
 english_name = "English"
 native_name = "English"
-file = "english.toml"
+file = "en.toml"
 
 [languages.de]
 english_name = "German"
 native_name = "Deutsch"
-file = "german.toml"
+file = "de.toml"
+
+[languages.ja]
+english_name = "Japanese"
+native_name = "日本語"
+file = "ja.toml"
