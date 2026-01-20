@@ -23,18 +23,19 @@ def list(
 
     Args:
         as_english (Optional[bool]): use english spelling when listing languages
-        use_casefold (Optional[bool]): use ASCII characters when listing languages
+        use_casefold (Optional[bool]): output results without casing
 
     Example:
     ```bash
     $ python -m translation_library list -l en
     $ python -m translation_library list -l de -a
-    $ python -m translation_library list -l jp -c
+    $ python -m translation_library list -l ja -c
     ```
     """
     if as_english:
         print(get_languages_as_english_names(casefold=use_casefold))
-    print(get_languages(casefold=use_casefold))
+    else:
+        print(get_languages(casefold=use_casefold))
 
 
 @cli.command()
@@ -56,7 +57,7 @@ def translate(
     ```bash
     $ python -m translation_library translate -l en -k confirm
     $ python -m translation_library translate -l de -k hello name=Blake
-    $ python -m translation_library translate -l jp -k notifications.new_message count=1
+    $ python -m translation_library translate -l ja -k notifications.new_message count=1
     ```
     """
     raw_i18n_str: str = str(get_i18n_obj(language_code.lower(), key_path))
@@ -79,12 +80,12 @@ def supported(
     Check if a given language is supported by your translation library.
 
     Args:
-        language (str): the language code to check (ex: en, de, jp, etc.)
+        language (str): the language code to check (ex: en, de, ja, etc.)
 
     ```bash
     $ python -m translation_library supported -l en
     $ python -m translation_library supported -l de
-    $ python -m translation_library supported -l jp
+    $ python -m translation_library supported -l ja
     ```
     """
     print(is_supported(language_code.lower()))

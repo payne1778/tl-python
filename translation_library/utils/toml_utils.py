@@ -27,6 +27,7 @@ def valid_toml_path_validator(v: str | Path) -> Path:
     Returns:
         Path: the original path if it exists, otherwise, valid_path_validator() will raise errors
     """
+    logger.debug("'path'=%r", v)
     if isinstance(v, str) and not v.endswith(".toml"):
         logger.error("arg '%s' did not end in .toml", v)
         raise ValueError("TOML file path must end in .toml")
@@ -35,6 +36,7 @@ def valid_toml_path_validator(v: str | Path) -> Path:
         logger.error("arg '%s' did not end in .toml", v)
         raise ValueError("TOML file path must end in .toml")
 
+    logger.debug("Validated extension of TOML file: %r", v)
     return valid_path_validator(v)
 
 
@@ -60,7 +62,7 @@ def serialize_toml_dict(
             if toml_data := tomlkit.load(f):
                 logger.debug("TOML successfully serialized from '%s'", toml_file_path)
                 return toml_data
-            logging.warning("None value serialized from '%s", toml_file_path)
+            logger.warning("None value serialized from '%s", toml_file_path)
             return {}
     except (EmptyKeyError, EmptyTableNameError) as ee:
         logger.exception("TOML file '%s' has invalid syntax", toml_file_path)
@@ -121,18 +123,18 @@ def get_value_from_key(
         language_toml_dict: dict[str, object] = serialize_toml_dict(toml_file_path)
         if value := glom(language_toml_dict, key_path):
             logger.debug(
-                "Successfully retrieved '%s' with key '%s' from '%s",
+                "Successfully retrieved '%s' with key '%s' from '%s'",
                 value,
                 key_path,
                 toml_file_path,
             )
             return value
-        logging.warning(
-            "None retrieved with key '%s' from '%s", key_path, toml_file_path
+        logger.warning(
+            "None retrieved with key '%s' from '%s'", key_path, toml_file_path
         )
         return [] if "*" in key_path else ""
     except PathAccessError as pae:
-        logger.exception("Key '%s' does not exist in %s", key_path, toml_file_path)
+        logger.exception("Key '%s' does not exist in '%s'", key_path, toml_file_path)
         raise pae
     except Exception as e:
         logger.exception(

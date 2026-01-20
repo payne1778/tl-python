@@ -22,6 +22,7 @@ def valid_path_validator(v: str | Path) -> Path:
     Returns:
         Path: the original path if it exists, otherwise errors are raised.
     """
+    logger.debug("path=%r", v)
     if isinstance(v, str):
         if not v.strip():
             logger.error("arg '%s' was None/null", v)
@@ -29,13 +30,14 @@ def valid_path_validator(v: str | Path) -> Path:
         elif not exists(Path(v)):
             logger.error("arg '%s' could not be located/does not exist", v)
             raise FileNotFoundError(f"path '{v}' could not be located/does not exist")
+        logger.info("Validated existence of path: %r", Path(v))
         return Path(v)
 
-    if isinstance(v, Path):
-        if not exists(v):
-            logger.error("arg '%s' could not be located/does not exist", v)
-            raise FileNotFoundError(f"path '{v}' could not be located/does not exist")
-        return v
+    if not exists(v):
+        logger.error("arg '%s' could not be located/does not exist", v)
+        raise FileNotFoundError(f"path '{v}' could not be located/does not exist")
+    logger.info("Validated existence of path: %r", v)
+    return v
 
 
 @validate_call
@@ -54,9 +56,11 @@ def get_project_root(
     Returns:
         Path: the path of the project root
     """
+    logger.debug("'anchor'=%r", anchor)
     current_path = Path(__file__).resolve()
     for parent in current_path.parents:
         if (parent / anchor).exists():
+            logger.debug("found project root: %r", parent)
             return parent
     logger.error("'anchor' arg '%s' was not in parents of %s", anchor, current_path)
     raise FileNotFoundError(

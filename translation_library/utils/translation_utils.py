@@ -18,18 +18,26 @@ def get_languages(casefold: bool = False) -> list[str]:
     Returns a list of all supported languages according to the languages TOML
     file. Each entry in the list is the language spelled in its native spelling:
 
-    >>> ["English", "Deutsch", "Español"]
+    >>> ["English", "Deutsch", "日本語"]
+
+    Or with casefold:
+
+    >>> ["english", "deutsch", "日本語"]
 
     Args:
-        language (str): TODO: fixme!!
+        casefold (Optional[bool]): use caseless strs if true, otherwise use default casing
 
     Returns:
         list[str]: list of all supported languages with their native spelling
     """
-    logger.debug("Attempting to retrieve list of supported languages")
+    languages: list[str]
+    logger.debug("'casefold'=%r", casefold)
     if casefold:
-        return [name.casefold() for name in get_all_native_names()]
-    return get_all_native_names()
+        languages = [name.casefold() for name in get_all_native_names()]
+    else:
+        languages = get_all_native_names()
+    logger.info("Languages: %r", languages)
+    return languages
 
 
 def get_languages_as_english_names(casefold: bool = False) -> list[str]:
@@ -38,62 +46,79 @@ def get_languages_as_english_names(casefold: bool = False) -> list[str]:
     file. Each entry in the list is the language spelled in its english
     spelling:
 
-    >>> ["english", "german", "spanish"]
+    >>> ["English", "German", "Japanese"]
+
+    Or with casefold:
+
+    >>> ["english", "german", "japanese"]
 
     Args:
-        casefold (bool): TODO: fixme!!
+        casefold (Optional[bool]): use caseless strs if true, otherwise use default casing
 
     Returns:
         list[str]: list of all supported languages with their english spelling
     """
-    logger.debug("Attempting to retrieve list of supported languages as english names")
+    languages: list[str]
+    logger.debug("'casefold'=%r", casefold)
     if casefold:
-        return [name.casefold() for name in get_all_english_names()]
-    return get_all_english_names()
+        languages = [name.casefold() for name in get_all_english_names()]
+    else:
+        languages = get_all_english_names()
+    logger.info("Languages: %r", languages)
+    return languages
 
 
-# TODO: make `language` into `language_code`
 @validate_call
-def is_supported(language: str = Field(..., min_length=1)) -> bool:
+def is_supported(language_code: str = Field(..., min_length=1)) -> bool:
     """
     Checks to see if a given language is supported.
 
     Args:
-        language (str): the name of the language to check if support
+        language_code (str): the language code to check if supported
 
     Returns:
         bool: `True` if the language is supported, `False` otherwise
     """
-    supported: bool = language in get_all_language_codes()
-    logger.debug("'%s' is supported? '%s'", language, str(supported))
+    logger.debug("'language_code'=%r", language_code)
+    supported: bool = language_code in get_all_language_codes()
+    logger.debug("'%s' is supported? '%s'", language_code, str(supported))
     return supported
 
 
-# TODO: make `language` into `language_code`
 @validate_call
 def get_i18n_obj(
-    language: str = Field(..., min_length=1), key_path: str = Field(..., min_length=1)
+    language_code: str = Field(..., min_length=1),
+    key_path: str = Field(..., min_length=1),
 ) -> object:
     """
     Get the value of a specific key from a given language TOML file.
 
     Args:
-        language (str): the name of the language TOML dict to get value from
-        key_path (str): the path to the key in the specified language TOML dict
+        language_code (str): the language's code from which to retrieve the i18n object
+        key_path (str): the key's path in the specified language TOML file. supports globbing.
 
     Returns:
-        object: the value of a given key
+        object: the value (as an object) of associated with the given key
     """
-    logger.debug("Getting '%s' from the '%s' TOML file" % (key_path, language))
-    if value := get_value_from_key(get_language_file_path(language), key_path):
+    if not is_supported(language_code):
+        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
+        raise ValueError(f"{language_code} is not supported")
+
+    logger.debug(
+        "'%s' is supported. Getting value with '%s' from TOML file"
+        % (language_code, key_path)
+    )
+    if value := get_value_from_key(get_language_file_path(language_code), key_path):
         logger.info(
-            "Successfully retrieved '%s' with key '%s' from '%s.toml'",
+            "Successfully retrieved '%s' with key '%s' from '%s' TOML file",
             value,
             key_path,
-            language,
+            language_code,
         )
         return value
     logger.warning(
-        "None value retrieved with key '%s' from '%s.toml'", key_path, language
+        "None value retrieved with key '%s' from '%s' TOML file",
+        key_path,
+        language_code,
     )
     return None
