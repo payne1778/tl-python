@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pytest
 from glom.core import PathAccessError  # type: ignore
 

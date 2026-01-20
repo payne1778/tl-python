@@ -23,12 +23,12 @@ def test_serialize_toml() -> None:
 
 def test_serialize_toml_wrong_extension_fail() -> None:
     with pytest.raises(ValueError):
-        serialize_toml_dict(EXAMPLE_UNSUPPORTED_FILE_EXTENSION_PATH)
+        _ = serialize_toml_dict(EXAMPLE_UNSUPPORTED_FILE_EXTENSION_PATH)
 
 
 def test_serialize_toml_invalid_toml_syntax_fail() -> None:
     with pytest.raises((ValueError, EmptyKeyError, EmptyTableNameError)):
-        serialize_toml_dict(EXAMPLE_INVALID_TOML_SYNTAX_PATH)
+        _ = serialize_toml_dict(EXAMPLE_INVALID_TOML_SYNTAX_PATH)
 
 
 def test_deserialize_toml() -> None:
@@ -49,28 +49,28 @@ def test_deserialize_toml_empty_dict_fail() -> None:
 
 
 def test_get_value_from_key_pass() -> None:
-    get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="setting")
+    _ = get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="setting")
 
 
 def test_get_value_from_key_nested_key_pass() -> None:
-    get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="start.section_name")
+    _ = get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="start.section_name")
 
 
 def test_get_value_from_key_empty_str_path_fail() -> None:
     with pytest.raises(ValidationError):
-        get_value_from_key("", key_path="hello")
+        _ = get_value_from_key("", key_path="hello")
 
 
 def test_get_value_from_key_empty_key_path_fail() -> None:
     with pytest.raises(ValidationError):
-        get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="")
+        _ = get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="")
 
 
 def test_get_value_from_key_wrong_section_fail() -> None:
     with pytest.raises(PathAccessError):
-        get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="welcome")
+        _ = get_value_from_key(EXAMPLE_ENGLISH_TOML_PATH, key_path="welcome")
 
 
 def test_get_value_from_key_unsupported_language_fail() -> None:
     with pytest.raises(FileNotFoundError):
-        get_value_from_key(EXAMPLE_UNSUPPORTED_LANGUAGE_TOML_PATH, key_path="hello")
+        _ = get_value_from_key(EXAMPLE_UNSUPPORTED_LANGUAGE_TOML_PATH, key_path="hello")
