@@ -2,7 +2,7 @@ from resources.constants.values import EXAMPLE_SUPPORTED_LANGUAGE_CODE
 from translation_library.utils.language_utils import into_toml_dict, into_toml_str
 
 
-def test_language_toml() -> None:
+def test_into_toml_dict() -> None:
     assert isinstance(into_toml_dict(EXAMPLE_SUPPORTED_LANGUAGE_CODE), dict)
 
 

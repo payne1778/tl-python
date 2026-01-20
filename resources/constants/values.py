@@ -1,5 +1,5 @@
 """
-const values used by unit tests for the `utils` module
+const values used primarily by unit tests
 """
 
 from pathlib import Path
