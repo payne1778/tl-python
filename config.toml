@@ -2,6 +2,9 @@
 # You can change this parent dir of your i18n files, but do not remove this line 
 i18n_dir = "resources/i18n"
 
+[languages]
+fallback = "en"
+
 [languages.en]
 english_name = "English"
 native_name = "English"

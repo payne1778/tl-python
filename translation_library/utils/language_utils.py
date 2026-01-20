@@ -3,7 +3,10 @@ import logging
 import tomlkit
 from pydantic import Field, validate_call
 
-from translation_library.utils.config_utils import get_language_file_path
+from translation_library.utils.config_utils import (
+    get_fallback_language_code,
+    get_language_file_path,
+)
 from translation_library.utils.toml_utils import serialize_toml_dict
 from translation_library.utils.translation_utils import is_supported
 
@@ -24,10 +27,11 @@ def into_toml_dict(language_code: str = Field(..., min_length=1)) -> dict[str, o
     logger.debug("'language_code'=%r", language_code)
 
     if not is_supported(language_code):
-        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
-        raise ValueError(f"{language_code} is not supported")
+        logger.warning("'%s' is not supported, using fallback", language_code)
+        language_code = get_fallback_language_code()
+    else:
+        logger.debug("'%s' is supported. Serializing its TOML dict", language_code)
 
-    logger.debug("'%s' is supported. Serializing its TOML dict", language_code)
     if toml_dict := serialize_toml_dict(get_language_file_path(language_code)):
         logger.info("'toml_dict'=%r", toml_dict)
         return toml_dict
@@ -47,10 +51,11 @@ def into_toml_str(language_code: str = Field(..., min_length=1)) -> str:
     logger.debug("'language_code'=%r", language_code)
 
     if not is_supported(language_code):
-        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
-        raise ValueError(f"{language_code} is not supported")
+        logger.warning("'%s' is not supported, using fallback", language_code)
+        language_code = get_fallback_language_code()
+    else:
+        logger.debug("'%s' is supported. Converting its dict into str", language_code)
 
-    logger.debug("'%s' is supported. Converting its dictionary into str", language_code)
     if toml_str := tomlkit.dumps(into_toml_dict(language_code)):
         logger.info("'toml_str'=%r", toml_str)
         return toml_str
@@ -68,6 +73,7 @@ def print_toml_dict(language_code: str = Field(..., min_length=1)) -> None:
         language_code (str): the code of the desired language to pretty print
     """
     logger.debug("'language_code'=%r", language_code)
+
     toml_str: str = into_toml_str(language_code)
     logger.debug("printing TOML str: `%s`", toml_str)
     print(toml_str)

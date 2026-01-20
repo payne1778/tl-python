@@ -6,6 +6,7 @@ from translation_library.utils.config_utils import (
     get_all_english_names,
     get_all_language_codes,
     get_all_native_names,
+    get_fallback_language_code,
     get_language_file_path,
 )
 from translation_library.utils.toml_utils import get_value_from_key
@@ -91,7 +92,9 @@ def get_i18n_obj(
     key_path: str = Field(..., min_length=1),
 ) -> object:
     """
-    Get the value of a specific key from a given language TOML file.
+    Get the value of a specific key from a given language TOML file. Uses the
+    fallback language if a preferred language TOML file could not be found or
+    if the language is not supported.
 
     Args:
         language_code (str): the language's code from which to retrieve the i18n object
@@ -101,13 +104,43 @@ def get_i18n_obj(
         object: the value (as an object) of associated with the given key
     """
     if not is_supported(language_code):
-        logger.error("is_supported() returned 'False' for arg: '%s'", language_code)
-        raise ValueError(f"{language_code} is not supported")
+        logger.warning("'%s' is not supported, using fallback", language_code)
+        try:
+            return _get_i18n_obj(get_fallback_language_code(), key_path)
+        except FileNotFoundError as fnfe:
+            logger.exception("Could not find file for fallback: '%s'")
+            raise fnfe
 
     logger.debug(
         "'%s' is supported. Getting value with '%s' from TOML file"
         % (language_code, key_path)
     )
+    try:
+        return _get_i18n_obj(language_code, key_path)
+    except FileNotFoundError:
+        logger.exception("Could not find file for '%s', using fallback", language_code)
+        try:
+            return _get_i18n_obj(get_fallback_language_code(), key_path)
+        except FileNotFoundError as fnfe:
+            logger.exception("Could not find file for fallback: '%s'", language_code)
+            raise fnfe
+
+
+def _get_i18n_obj(
+    language_code: str = Field(..., min_length=1),
+    key_path: str = Field(..., min_length=1),
+) -> object:
+    """
+    Intended for internal use. Get the value of a specific key from a given
+    language TOML file.
+
+    Args:
+        language_code (str): the language's code from which to retrieve the i18n object
+        key_path (str): the key's path in the specified language TOML file. supports globbing.
+
+    Returns:
+        object: the value (as an object) of associated with the given key
+    """
     if value := get_value_from_key(get_language_file_path(language_code), key_path):
         logger.info(
             "Successfully retrieved '%s' with key '%s' from '%s' TOML file",

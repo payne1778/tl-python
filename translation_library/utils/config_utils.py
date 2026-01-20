@@ -23,6 +23,10 @@ def get_i18n_dir_path() -> Path:
     return Path(str(get_value_from_config("paths.i18n_dir")))
 
 
+def get_fallback_language_code() -> str:
+    return str(get_value_from_config("languages.fallback"))
+
+
 def get_all_english_names() -> list[str]:
     return [str(name) for name in get_value_from_config("languages.*.english_name")]
 

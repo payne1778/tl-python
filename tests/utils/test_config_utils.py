@@ -11,10 +11,11 @@ from resources.constants.values import (
 )
 from translation_library.utils.config_utils import (
     get_all_english_names,
-    get_all_file_names,  # TODO: test this
+    get_all_file_names,
     get_all_language_codes,
     get_all_native_names,
     get_config_file_path,
+    get_fallback_language_code,  # TODO: test this
     get_i18n_dir_path,
     get_language_file_path,
     get_value_from_config,  # TODO: test this
