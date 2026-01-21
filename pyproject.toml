@@ -1,7 +1,7 @@
 [project]
 name = "tl-python"
 version = "1.0.0"
-description = "Add your description here"
+description = "TOML based translation library written in Python"
 readme = "README.md"
 requires-python = ">=3.14"
 license = { file = "LICENSE" }
