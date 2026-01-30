@@ -5,6 +5,7 @@ i18n_dir = "resources/i18n"
 [languages]
 fallback = "en"
 
+# Language codes must be all lowercase, independent of the standard you are using. 
 [languages.en]
 english_name = "English"
 native_name = "English"
