@@ -25,7 +25,7 @@ Utilities for interacting with TOML files.
 
 #### > [config_utils.py](./config_utils.py)
 
-Utilities for interacting with the `config.toml` file in the project root.
+Utilities for interacting with the [`config.toml`](../../config.toml) file in the project root.
 
 #### > [translation_utils.py](./translation_utils.py)
 
