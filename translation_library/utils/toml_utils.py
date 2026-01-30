@@ -138,7 +138,7 @@ def get_value_from_key(
         return [] if "*" in key_path else ""
     except PathAccessError as pae:
         logger.exception("Key '%s' does not exist in '%s'", key_path, toml_file_path)
-        raise pae
+        raise KeyError(f"Key '{key_path}' does not exist in TOML file") from pae
     except Exception as e:
         logger.exception(
             "Could not get value with key '%s' from '%s' due to:",
