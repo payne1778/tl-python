@@ -10,7 +10,7 @@ from resources.constants.values import (
     EXAMPLE_UNSUPPORTED_FILE_EXTENSION_PATH,
     EXAMPLE_UNSUPPORTED_LANGUAGE_TOML_PATH,
 )
-from translation_library.utils.toml_utils import (
+from tl.utils.toml_utils import (
     deserialize_toml_dict,
     get_value_from_key,
     serialize_toml_dict,

@@ -7,7 +7,7 @@ from resources.constants.values import (
     EXAMPLE_UNSUPPORTED_LANGUAGE,
     EXAMPLE_UNSUPPORTED_LANGUAGE_CODE,
 )
-from translation_library.utils.config_utils import (
+from tl.utils.config_utils import (
     get_all_english_names,
     get_all_file_names,
     get_all_language_codes,

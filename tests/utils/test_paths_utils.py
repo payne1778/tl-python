@@ -6,7 +6,7 @@ from resources.constants.values import (
     EXAMPLE_ENGLISH_TOML_PATH,
     EXAMPLE_UNSUPPORTED_LANGUAGE,
 )
-from translation_library.utils.path_utils import get_project_root, valid_path_validator
+from tl.utils.path_utils import get_project_root, valid_path_validator
 
 
 def test_valid_path_validator() -> None:

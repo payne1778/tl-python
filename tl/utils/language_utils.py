@@ -3,12 +3,9 @@ import logging
 import tomlkit
 from pydantic import Field, validate_call
 
-from translation_library.utils.config_utils import (
-    get_fallback_language_code,
-    get_language_file_path,
-)
-from translation_library.utils.toml_utils import serialize_toml_dict
-from translation_library.utils.translation_utils import is_supported
+from tl.utils.config_utils import get_fallback_language_code, get_language_file_path
+from tl.utils.toml_utils import serialize_toml_dict
+from tl.utils.translation_utils import is_supported
 
 logger = logging.getLogger(__name__)
 

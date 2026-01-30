@@ -2,17 +2,17 @@ import os
 import sys
 from pathlib import Path
 
-from translation_library.utils.language_utils import (
+from tl.utils.language_utils import (
     get_languages,
     get_languages_anglicized,
     is_supported,
 )
-from translation_library.utils.path_utils import (
+from tl.utils.path_utils import (
     get_file_path_in_root,
     get_languages_file_path,
     get_project_root,
 )
-from translation_library.utils.toml_utils import serialize_toml_dict
+from tl.utils.toml_utils import serialize_toml_dict
 
 
 def populate_translation_vars(

@@ -2,14 +2,14 @@ import logging
 
 from pydantic import Field, validate_call
 
-from translation_library.utils.config_utils import (
+from tl.utils.config_utils import (
     get_all_english_names,
     get_all_language_codes,
     get_all_native_names,
     get_fallback_language_code,
     get_language_file_path,
 )
-from translation_library.utils.toml_utils import get_value_from_key
+from tl.utils.toml_utils import get_value_from_key
 
 logger = logging.getLogger(__name__)
 

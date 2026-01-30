@@ -8,7 +8,7 @@ from glom.core import PathAccessError  # type: ignore
 from pydantic import BeforeValidator, Field, validate_call
 from tomlkit.exceptions import EmptyKeyError, EmptyTableNameError
 
-from translation_library.utils.path_utils import valid_path_validator
+from tl.utils.path_utils import valid_path_validator
 
 logger = logging.getLogger(__name__)
 

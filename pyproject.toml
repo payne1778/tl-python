@@ -10,11 +10,12 @@ authors = [{ name = "payne1778" }]
 dependencies = ["pytest", "tomlkit", "glom", "pydantic", "typer"]
 
 [project.scripts]
-tl-python = "translation_library.__main__:main"
+tl-python = "tl.__main__:main"
 
 [project.urls]
 resources-repo = "https://github.com/payne1778/Translation-Library-Docs"
 monorepo = "https://github.com/payne1778/Translation-Library"
+repo = "https://github.com/payne1778/tl-python"
 
 [tool.pyright]
 reportCallInDefaultInitializer = "none"

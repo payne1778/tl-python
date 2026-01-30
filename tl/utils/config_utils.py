@@ -3,8 +3,8 @@
 import logging
 from pathlib import Path
 
-from translation_library.utils.path_utils import get_project_root
-from translation_library.utils.toml_utils import get_value_from_key
+from tl.utils.path_utils import get_project_root
+from tl.utils.toml_utils import get_value_from_key
 
 logger = logging.getLogger(__name__)
 
