@@ -23,6 +23,8 @@
 - Make source code a public package available on PIP
 - Start using semantic versioning after soon (might be after 1.0.0 😭)
 - Implement, test, and document utility functions for interaction with `config.toml`
+- Create a CLI for interacting with the config file 
+- Export CLIs into executables runnable in the terminal 
 
 ### Suggestions & Improvements
 
