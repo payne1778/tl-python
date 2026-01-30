@@ -1,6 +1,6 @@
 import logging
 
-from translation_library.cli.new_cli import cli
+from translation_library.cli.tl_cli import cli
 
 logger = logging.getLogger(__name__)
 

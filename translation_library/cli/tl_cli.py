@@ -28,7 +28,7 @@ def list(
     Example:
     ```bash
     $ python -m translation_library list -l en
-    $ python -m translation_library list -l de -a
+    $ python -m translation_library list -l de -e
     $ python -m translation_library list -l ja -c
     ```
     """

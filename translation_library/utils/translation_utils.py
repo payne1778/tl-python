@@ -59,8 +59,9 @@ def get_languages_as_english_names(casefold: bool = False) -> list[str]:
     Returns:
         list[str]: list of all supported languages with their english spelling
     """
-    languages: list[str]
     logger.debug("'casefold'=%r", casefold)
+
+    languages: list[str]
     if casefold:
         languages = [name.casefold() for name in get_all_english_names()]
     else:
@@ -81,6 +82,7 @@ def is_supported(language_code: str = Field(..., min_length=1)) -> bool:
         bool: `True` if the language is supported, `False` otherwise
     """
     logger.debug("'language_code'=%r", language_code)
+
     supported: bool = language_code in get_all_language_codes()
     logger.debug("'%s' is supported? '%s'", language_code, str(supported))
     return supported
